@@ -1,8 +1,9 @@
-import { Outlet } from "@remix-run/react";
-
-import ExpensesList from "~/components/expenses/ExpensesList";
+import { FC } from "react";
 
 import styles from "~/styles/expenses.css";
+
+import ExpensesStatistics from "~/components/expenses/ExpenseStatistics";
+import Chart from "~/components/expenses/Chart";
 
 const data = [
   {
@@ -25,15 +26,13 @@ const data = [
   },
 ];
 
-const ExpensesLayout = () => (
-  <>
-    <Outlet />
-    <main>
-      <ExpensesList expenses={data} />
-    </main>
-  </>
+export const ExpenseAnalysisPage: FC = () => (
+  <main>
+    <Chart expenses={data} />
+    <ExpensesStatistics expenses={data} />
+  </main>
 );
 
-export default ExpensesLayout;
+export default ExpenseAnalysisPage;
 
 export const links = () => [{ rel: "stylesheet", href: styles }];

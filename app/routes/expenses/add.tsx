@@ -1,5 +1,7 @@
 import { FC } from "react";
 
-export const ExpenseAddPage: FC = () => <h1>ExpenseAddPage</h1>;
+import ExpenseForm from "~/components/expenses/ExpenseForm";
+
+export const ExpenseAddPage: FC = () => <ExpenseForm />;
 
 export default ExpenseAddPage;
