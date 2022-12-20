@@ -1,8 +1,10 @@
 import { FC } from "react";
 
+import AuthForm from "~/components/auth/AuthForm";
+
 import styles from "~/styles/auth.css";
 
-export const AuthPage: FC = () => <h1>Auth page</h1>;
+export const AuthPage: FC = () => <AuthForm />;
 
 export default AuthPage;
 
