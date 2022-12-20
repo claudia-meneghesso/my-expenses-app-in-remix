@@ -16,3 +16,25 @@ export const addExpense = async (expenseData: Expense) => {
     throw error;
   }
 };
+
+export const getExpenses = async () => {
+  try {
+    return await prisma.expense.findMany({ orderBy: { date: "desc" } });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getExpense = async (id: string) => {
+  try {
+    return prisma.expense.findUnique({ where: { id } });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const editExpense = async (id, expenseData) => {
+  return await prisma.expense.update({ select: id, data: expenseData });
+};

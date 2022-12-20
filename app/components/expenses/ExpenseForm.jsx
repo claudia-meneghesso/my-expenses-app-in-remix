@@ -1,4 +1,10 @@
-import { Form, Link, useActionData, useTransition } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useActionData,
+  useLoaderData,
+  useTransition,
+} from "@remix-run/react";
 
 function ExpenseForm() {
   const today = new Date().toISOString().slice(0, 10); // yields something like 2023-09-10
@@ -9,11 +15,24 @@ function ExpenseForm() {
 
   const isSubmitting = navigation.state !== "idle";
 
+  const expense = useLoaderData();
+
+  const data = expense
+    ? { title: expense.title, amount: expense.amount, date: expense.date }
+    : { title: "", amount: "", date: "" };
+
   return (
     <Form method="post" className="form" id="expense-form">
       <p>
         <label htmlFor="title">Expense Title</label>
-        <input type="text" id="title" name="title" required maxLength={30} />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          required
+          maxLength={30}
+          defaultValue={data.title}
+        />
       </p>
 
       <div className="form-row">
@@ -26,11 +45,19 @@ function ExpenseForm() {
             min="0"
             step="0.01"
             required
+            defaultValue={data.amount}
           />
         </p>
         <p>
           <label htmlFor="date">Date</label>
-          <input type="date" id="date" name="date" max={today} required />
+          <input
+            type="date"
+            id="date"
+            name="date"
+            max={today}
+            required
+            defaultValue={data.date ? data.date.slice(0, 10) : ""}
+          />
         </p>
       </div>
       {validationErrors && (
