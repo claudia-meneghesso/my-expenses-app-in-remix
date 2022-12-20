@@ -8,8 +8,6 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import MainHeader from "~/components/navigation/MainHeader";
-
 import styles from "~/styles/shared.css";
 
 export default function App() {
@@ -29,7 +27,6 @@ export default function App() {
         />
       </head>
       <body>
-        <MainHeader />
         <Outlet />
         <ScrollRestoration />
         <Scripts />

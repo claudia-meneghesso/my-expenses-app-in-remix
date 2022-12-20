@@ -1,7 +1,5 @@
 import { FC } from "react";
 
-import styles from "~/styles/expenses.css";
-
 import ExpensesStatistics from "~/components/expenses/ExpenseStatistics";
 import Chart from "~/components/expenses/Chart";
 
@@ -34,5 +32,3 @@ export const ExpenseAnalysisPage: FC = () => (
 );
 
 export default ExpenseAnalysisPage;
-
-export const links = () => [{ rel: "stylesheet", href: styles }];

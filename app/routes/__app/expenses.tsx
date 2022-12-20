@@ -1,8 +1,7 @@
 import { Outlet } from "@remix-run/react";
 
 import ExpensesList from "~/components/expenses/ExpensesList";
-
-import styles from "~/styles/expenses.css";
+import ExpensesHeader from "~/components/navigation/ExpensesHeader";
 
 const data = [
   {
@@ -27,6 +26,7 @@ const data = [
 
 const ExpensesLayout = () => (
   <>
+    <ExpensesHeader />
     <Outlet />
     <main>
       <ExpensesList expenses={data} />
@@ -35,5 +35,3 @@ const ExpensesLayout = () => (
 );
 
 export default ExpensesLayout;
-
-export const links = () => [{ rel: "stylesheet", href: styles }];

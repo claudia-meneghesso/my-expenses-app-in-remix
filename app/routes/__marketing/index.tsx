@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+
 import { FaArrowRight, FaDollarSign, FaChartBar } from "react-icons/fa";
 
 export default function Index() {
