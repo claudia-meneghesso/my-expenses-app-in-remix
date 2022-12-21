@@ -26,6 +26,10 @@ function ExpenseForm() {
 
   const expense = expenses.find((exp) => exp.id === params.id);
 
+  if (params.id && !expense) {
+    return <p>Invalid expense id.</p>;
+  }
+
   const data = expense
     ? { title: expense.title, amount: expense.amount, date: expense.date }
     : { title: "", amount: "", date: "" };
