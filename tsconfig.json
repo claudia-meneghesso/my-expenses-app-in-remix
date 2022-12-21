@@ -4,7 +4,7 @@
     "**/*.ts",
     "**/*.tsx",
     "app/data/expenses.server.js",
-    "app/data/database.server.js"
+    "app/data/database.server.ts"
   ],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019"],

@@ -1,10 +1,13 @@
+import { redirect } from "@remix-run/node";
 import { FC } from "react";
 
 import AuthForm from "~/components/auth/AuthForm";
 
+import { signup } from "~/data/auth.server";
 import { validateCredentials } from "~/data/validation.server";
 
 import styles from "~/styles/auth.css";
+import { User } from "~/types/user";
 
 export const AuthPage: FC = () => <AuthForm />;
 
@@ -19,7 +22,7 @@ export const action = async ({ request }) => {
 
   const formData = await request.formData();
 
-  const credentials = Object.fromEntries(formData);
+  const credentials = Object.fromEntries(formData) as User;
 
   try {
     validateCredentials(credentials);
@@ -27,7 +30,19 @@ export const action = async ({ request }) => {
     return error;
   }
 
-  if (authMode === "login") {
-  } else {
+  try {
+    if (authMode === "login") {
+      return null;
+    } else {
+      await signup(credentials);
+
+      return redirect("/expenses");
+    }
+  } catch (error) {
+    if (error.status === 422) {
+      return {
+        credentials: error.message,
+      };
+    }
   }
 };

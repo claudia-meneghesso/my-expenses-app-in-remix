@@ -44,7 +44,7 @@ function isValidPassword(value: string) {
   return value && value.trim().length >= 7;
 }
 
-export function validateCredentials(input: { [key: string]: string }) {
+export function validateCredentials(input: { [k: string]: any }) {
   let validationErrors = {};
 
   if (!isValidEmail(input.email)) {
