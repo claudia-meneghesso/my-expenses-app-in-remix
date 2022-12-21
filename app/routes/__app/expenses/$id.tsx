@@ -1,7 +1,7 @@
 import { useNavigate } from "@remix-run/react";
 import { FC } from "react";
 
-import { updateExpense } from "~/data/expenses.server";
+import { deleteExpense, updateExpense } from "~/data/expenses.server";
 
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
@@ -28,17 +28,23 @@ export default ExpenseDetailPage;
 export const action = async ({ params, request }) => {
   const expenseId = params.id;
 
-  const formData = await request.formData();
+  if (request.method === "PATCH") {
+    const formData = await request.formData();
 
-  const expenseData = Object.fromEntries(formData) as Expense;
+    const expenseData = Object.fromEntries(formData) as Expense;
 
-  try {
-    validateExpenseInput(expenseData);
-  } catch (error) {
-    return error;
+    try {
+      validateExpenseInput(expenseData);
+    } catch (error) {
+      return error;
+    }
+
+    await updateExpense(expenseId, expenseData);
   }
 
-  await updateExpense(expenseId, expenseData);
+  if (request.method === "DELETE") {
+    await deleteExpense(expenseId);
+  }
 
   return redirect("/expenses");
 };
