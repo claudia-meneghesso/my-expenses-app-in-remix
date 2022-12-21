@@ -1,10 +1,19 @@
-import { Link, useParams } from "@remix-run/react";
+import { Link, useParams, useSubmit } from "@remix-run/react";
 
 import { deleteExpense } from "~/data/expenses.server";
 
 import { Form } from "@remix-run/react";
 
 function ExpenseListItem({ id, title, amount }) {
+  const submit = useSubmit();
+
+  const handleDelete = () => {
+    submit(null, {
+      method: "delete",
+      action: `/expenses/${id}`,
+    });
+  };
+
   return (
     <article className="expense-item">
       <div>
@@ -12,9 +21,7 @@ function ExpenseListItem({ id, title, amount }) {
         <p className="expense-amount">${amount.toFixed(2)}</p>
       </div>
       <menu className="expense-actions">
-        <Form method="delete" action={`/expenses/${id}`}>
-          <button>Delete</button>
-        </Form>
+        <button onClick={handleDelete}>Delete</button>
         <Link to={id}>Edit</Link>
       </menu>
     </article>
