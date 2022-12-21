@@ -1,6 +1,6 @@
 import { FaLock, FaUserPlus } from "react-icons/fa";
 
-import { Link, useSearchParams } from "@remix-run/react";
+import { Form, Link, useSearchParams } from "@remix-run/react";
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
@@ -16,7 +16,7 @@ function AuthForm() {
     : "Log in with existing user";
 
   return (
-    <form method="post" className="form" id="auth-form">
+    <Form method="post" className="form" id="auth-form">
       <div className="icon-img">{isLogIn ? <FaLock /> : <FaUserPlus />}</div>
       <p>
         <label htmlFor="email">Email Address</label>
@@ -32,8 +32,21 @@ function AuthForm() {
           {toggleBtnCaption}
         </Link>
       </div>
-    </form>
+    </Form>
   );
 }
 
 export default AuthForm;
+
+export const action = async ({ request }) => {
+  const searchParams = new URL(request.url).searchParams;
+  const authMode = searchParams.get("mode") || "login";
+
+  const formData = await request.formData();
+
+  const credentials = Object.fromEntries(formData);
+
+  if (authMode === "login") {
+  } else {
+  }
+};
