@@ -2,33 +2,27 @@ import { FC } from "react";
 
 import ExpensesStatistics from "~/components/expenses/ExpenseStatistics";
 import Chart from "~/components/expenses/Chart";
+import ExpensesHeader from "~/components/navigation/ExpensesHeader";
 
-const data = [
-  {
-    id: "e1",
-    title: "First expense",
-    amount: 16.22,
-    date: new Date().toISOString(),
-  },
-  {
-    id: "e2",
-    title: "Second expense",
-    amount: 45.0,
-    date: new Date().toISOString(),
-  },
-  {
-    id: "e3",
-    title: "Third expense",
-    amount: 84.34,
-    date: new Date().toISOString(),
-  },
-];
+import { getExpenses } from "~/data/expenses.server";
+import { useLoaderData } from "@remix-run/react";
 
-export const ExpenseAnalysisPage: FC = () => (
-  <main>
-    <Chart expenses={data} />
-    <ExpensesStatistics expenses={data} />
-  </main>
-);
+export const ExpenseAnalysisPage: FC = () => {
+  const data = useLoaderData();
+
+  return (
+    <>
+      <ExpensesHeader />
+      <main>
+        <Chart expenses={data} />
+        <ExpensesStatistics expenses={data} />
+      </main>
+    </>
+  );
+};
 
 export default ExpenseAnalysisPage;
+
+export const loader = async () => {
+  return getExpenses();
+};
