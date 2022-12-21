@@ -1,6 +1,12 @@
 import { FaLock, FaUserPlus } from "react-icons/fa";
 
-import { Form, Link, useSearchParams, useTransition } from "@remix-run/react";
+import {
+  Form,
+  Link,
+  useSearchParams,
+  useActionData,
+  useTransition,
+} from "@remix-run/react";
 
 function AuthForm() {
   const [searchParams] = useSearchParams();
@@ -15,9 +21,11 @@ function AuthForm() {
     ? "Create a new user"
     : "Log in with existing user";
 
-  const navigation = useNavigation();
+  const navigation = useTransition();
 
   const isSubmitting = navigation.state !== "idle";
+
+  const validationErrors = useActionData();
 
   return (
     <Form method="post" className="form" id="auth-form">
@@ -30,6 +38,13 @@ function AuthForm() {
         <label htmlFor="password">Password</label>
         <input type="password" id="password" name="password" minLength={7} />
       </p>
+      {validationErrors && (
+        <ul>
+          {Object.values(validationErrors).map((error) => (
+            <li key={error}>{error}</li>
+          ))}
+        </ul>
+      )}
       <div className="form-actions">
         <button>{isSubmitting ? "Authentication..." : submitBtnCaption}</button>
         <Link to={isLogIn ? "?mode=signup" : "?mode=login"}>
@@ -41,16 +56,3 @@ function AuthForm() {
 }
 
 export default AuthForm;
-
-export const action = async ({ request }) => {
-  const searchParams = new URL(request.url).searchParams;
-  const authMode = searchParams.get("mode") || "login";
-
-  const formData = await request.formData();
-
-  const credentials = Object.fromEntries(formData);
-
-  if (authMode === "login") {
-  } else {
-  }
-};
