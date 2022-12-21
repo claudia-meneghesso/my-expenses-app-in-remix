@@ -38,3 +38,19 @@ export const addExpense = async (expenseData: Expense) => {
 export const editExpense = async (id, expenseData) => {
   return await prisma.expense.update({ select: id, data: expenseData });
 };
+
+export const updateExpense = async (id, expenseData) => {
+  try {
+    return await prisma.expense.update({
+      where: { id },
+      data: {
+        title: expenseData.title,
+        amount: +expenseData.amount,
+        date: new Date(expenseData.date),
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
