@@ -84,7 +84,6 @@ export const CatchBoundary = () => {
 
 // Return all other generated errors (unhandled errors)
 export const ErrorBoundary = ({ error }) => {
-  console.log(error);
   return (
     <Document title="Error">
       <main>
