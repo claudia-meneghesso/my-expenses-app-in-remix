@@ -2,21 +2,6 @@ import { prisma } from "./database.server";
 
 import { Expense } from "~/types/expense";
 
-export const addExpense = async (expenseData: Expense) => {
-  try {
-    return await prisma.expense.create({
-      data: {
-        title: expenseData.title,
-        amount: +expenseData.amount,
-        date: new Date(expenseData.date),
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 export const getExpenses = async () => {
   try {
     return await prisma.expense.findMany({ orderBy: { date: "desc" } });
@@ -29,6 +14,21 @@ export const getExpenses = async () => {
 export const getExpense = async (id: string) => {
   try {
     return prisma.expense.findUnique({ where: { id } });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const addExpense = async (expenseData: Expense) => {
+  try {
+    return await prisma.expense.create({
+      data: {
+        title: expenseData.title,
+        amount: +expenseData.amount,
+        date: new Date(expenseData.date),
+      },
+    });
   } catch (error) {
     console.log(error);
     throw error;
