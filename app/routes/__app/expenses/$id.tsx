@@ -40,11 +40,13 @@ export const action = async ({ params, request }) => {
     }
 
     await updateExpense(expenseId, expenseData);
+
+    return redirect("/expenses");
   }
 
   if (request.method === "DELETE") {
     await deleteExpense(expenseId);
-  }
 
-  return redirect("/expenses");
+    return null;
+  }
 };

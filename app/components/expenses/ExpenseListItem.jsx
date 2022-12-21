@@ -1,18 +1,30 @@
-import { Link, useParams, useSubmit } from "@remix-run/react";
+import { Link, useFetcher } from "@remix-run/react";
 
 import { deleteExpense } from "~/data/expenses.server";
 
-import { Form } from "@remix-run/react";
-
 function ExpenseListItem({ id, title, amount }) {
-  const submit = useSubmit();
+  const fetcher = useFetcher();
 
   const handleDelete = () => {
-    submit(null, {
+    fetcher.submit(null, {
       method: "delete",
       action: `/expenses/${id}`,
     });
   };
+
+  if (fetcher.state !== "idle") {
+    const proceed = confirm("Are you sure you want to delete this expense?");
+
+    if (!proceed) {
+      return;
+    }
+
+    return (
+      <article className="expense-item locked">
+        <p>Deleting...</p>
+      </article>
+    );
+  }
 
   return (
     <article className="expense-item">
