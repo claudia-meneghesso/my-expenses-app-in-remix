@@ -32,6 +32,21 @@ const createUserSession = async (userId: string, redirectPath: string) => {
   });
 };
 
+export const getUserFromSession = async (request) => {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+
+  const userId = session.get("userId");
+
+  // If no valid user id exists than session is invalid
+  if (!userId) {
+    return null;
+  }
+
+  return userId;
+};
+
 export const signup = async ({ email, password }: User) => {
   // Check if a user already exists with that email
   const existingUser = await prisma.users.findFirst({ where: { email } });
@@ -87,4 +102,16 @@ export const login = async ({ email, password }: User) => {
 
   // If all good then create a user session to assign a cookie
   return createUserSession(existingUser.id, "/expenses");
+};
+
+export const destroyUserSession = async (request) => {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": await sessionStorage.destroySession(session),
+    },
+  });
 };

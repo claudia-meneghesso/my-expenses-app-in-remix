@@ -2,6 +2,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { FaPlus, FaDownload } from "react-icons/fa";
 
 import ExpensesList from "~/components/expenses/ExpensesList";
+import { getUserFromSession } from "~/data/auth.server";
 
 import { getExpenses } from "~/data/expenses.server";
 
@@ -40,7 +41,7 @@ const ExpensesLayout = () => {
 export default ExpensesLayout;
 
 export const loader = async () => {
-  const expenses = await getExpenses();
+  const expenses = getExpenses();
 
   return expenses;
 };
