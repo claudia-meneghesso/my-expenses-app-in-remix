@@ -8,9 +8,7 @@ import styles from "~/styles/expenses.css";
 const ExpensesAppLayout = () => (
   <>
     <ExpensesHeader />
-    <main>
-      <Outlet />
-    </main>
+    <Outlet />
   </>
 );
 

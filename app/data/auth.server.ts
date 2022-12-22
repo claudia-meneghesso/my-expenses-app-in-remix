@@ -47,6 +47,14 @@ export const getUserFromSession = async (request) => {
   return userId;
 };
 
+export const requireUserSession = async (request) => {
+  const userId = await getUserFromSession(request);
+
+  if (!userId) {
+    throw redirect("/auth?mode=login");
+  }
+};
+
 export const signup = async ({ email, password }: User) => {
   // Check if a user already exists with that email
   const existingUser = await prisma.users.findFirst({ where: { email } });

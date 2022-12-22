@@ -7,6 +7,7 @@ import Chart from "~/components/expenses/Chart";
 import { getExpenses } from "~/data/expenses.server";
 import { useCatch, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
+import { requireUserSession } from "~/data/auth.server";
 
 export const ExpenseAnalysisPage: FC = () => {
   const data = useLoaderData();
@@ -21,7 +22,9 @@ export const ExpenseAnalysisPage: FC = () => {
 
 export default ExpenseAnalysisPage;
 
-export const loader = async () => {
+export const loader = async ({ request }) => {
+  await requireUserSession(request);
+
   const expenses = await getExpenses();
 
   if (!expenses || expenses.length === 0) {
