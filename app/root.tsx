@@ -10,6 +10,7 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useMatches,
 } from "@remix-run/react";
 
 import Error from "~/components/util/Error";
@@ -27,30 +28,36 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
-const Document: FC<DocumentProps> = ({ title, children }) => (
-  <html lang="en">
-    <head>
-      {title && <title>{title}</title>}
-      <Meta />
-      <Links />
-      <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossOrigin="true"
-      />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
-        rel="stylesheet"
-      />
-    </head>
-    <body>
-      {children}
-      <ScrollRestoration />
-      <Scripts />
-      <LiveReload />
-    </body>
-  </html>
-);
+const Document: FC<DocumentProps> = ({ title, children }) => {
+  const matches = useMatches();
+
+  const disableJS = matches.some((match) => match.handle?.disableJS);
+
+  return (
+    <html lang="en">
+      <head>
+        {title && <title>{title}</title>}
+        <Meta />
+        <Links />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="true"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body>
+        {children}
+        <ScrollRestoration />
+        {!disableJS && <Scripts />}
+        <LiveReload />
+      </body>
+    </html>
+  );
+};
 
 export default function App() {
   return (

@@ -28,3 +28,6 @@ export const headers = () => {
     "Cache-Control": "max-age=3600", // 60 minutes
   };
 };
+
+// Add any data to attach to your routes
+export const handle = { disableJS: true };
