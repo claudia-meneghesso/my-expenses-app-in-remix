@@ -21,10 +21,16 @@ interface DocumentProps {
   children: ReactNode;
 }
 
+export const meta: MetaFunction = () => ({
+  charset: "utf-8",
+  title: "My Expenses App",
+  viewport: "width=device-width,initial-scale=1",
+});
+
 const Document: FC<DocumentProps> = ({ title, children }) => (
   <html lang="en">
     <head>
-      <title>{title}</title>
+      {title && <title>{title}</title>}
       <Meta />
       <Links />
       <link
@@ -53,12 +59,6 @@ export default function App() {
     </Document>
   );
 }
-
-export const meta: MetaFunction = () => ({
-  charset: "utf-8",
-  title: "New Remix App",
-  viewport: "width=device-width,initial-scale=1",
-});
 
 export const links = () => [{ rel: "stylesheet", href: styles }];
 

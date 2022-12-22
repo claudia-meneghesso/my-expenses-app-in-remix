@@ -13,6 +13,13 @@ export const AuthPage: FC = () => <AuthForm />;
 
 export default AuthPage;
 
+export const meta = () => {
+  return {
+    title: "Login",
+    description: "Login to see your expenses data",
+  };
+};
+
 export const links = () => [{ rel: "stylesheet", href: styles }];
 
 export const action = async ({ request }) => {

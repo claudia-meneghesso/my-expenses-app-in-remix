@@ -9,6 +9,16 @@ import { redirect } from "@remix-run/node";
 import { validateExpenseInput } from "~/data/validation.server";
 import { Expense } from "~/types/expense";
 
+export const meta = ({ params, location, parentsData }) => {
+  const expense = parentsData["routes/__app/expenses"].find(
+    (exp) => exp.id === params.id
+  );
+  return {
+    title: expense.title,
+    description: "Update expense",
+  };
+};
+
 export const ExpenseDetailPage: FC = () => {
   const navigate = useNavigate();
 

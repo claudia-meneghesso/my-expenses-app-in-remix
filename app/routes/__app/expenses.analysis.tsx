@@ -22,6 +22,13 @@ export const ExpenseAnalysisPage: FC = () => {
 
 export default ExpenseAnalysisPage;
 
+export const meta = () => {
+  return {
+    title: "Analysis",
+    description: "See your expenses statistics",
+  };
+};
+
 export const loader = async ({ request }) => {
   const userId = await requireUserSession(request);
 
