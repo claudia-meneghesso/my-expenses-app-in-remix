@@ -3,7 +3,7 @@ import { FC } from "react";
 
 import AuthForm from "~/components/auth/AuthForm";
 
-import { signup } from "~/data/auth.server";
+import { login, signup } from "~/data/auth.server";
 import { validateCredentials } from "~/data/validation.server";
 
 import styles from "~/styles/auth.css";
@@ -32,17 +32,16 @@ export const action = async ({ request }) => {
 
   try {
     if (authMode === "login") {
-      return null;
+      return await login(credentials);
     } else {
-      await signup(credentials);
-
-      return redirect("/expenses");
+      return await signup(credentials);
     }
   } catch (error) {
-    if (error.status === 422) {
+    if (/(422|401|403)/.test(error.status)) {
       return {
         credentials: error.message,
       };
     }
+    return { credentials: "Something went wrong!" };
   }
 };

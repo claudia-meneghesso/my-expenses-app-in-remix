@@ -46,7 +46,9 @@ function AuthForm() {
         </ul>
       )}
       <div className="form-actions">
-        <button>{isSubmitting ? "Authentication..." : submitBtnCaption}</button>
+        <button type="submit">
+          {isSubmitting ? "Authentication..." : submitBtnCaption}
+        </button>
         <Link to={isLogIn ? "?mode=signup" : "?mode=login"}>
           {toggleBtnCaption}
         </Link>
