@@ -45,3 +45,9 @@ export const meta = () => {
     description: "See our pricing plans.",
   };
 };
+
+export const headers = ({ parentHeaders }) => {
+  return {
+    "Cache-Control": parentHeaders.get("Cache-Control"), // 60 minutes
+  };
+};

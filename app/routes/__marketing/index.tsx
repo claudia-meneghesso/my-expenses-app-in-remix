@@ -53,3 +53,9 @@ export default function Index() {
     </main>
   );
 }
+
+export const headers = () => {
+  return {
+    "Cache-Control": "max-age=3600", // 60 minutes
+  };
+};

@@ -22,3 +22,9 @@ export const links = () => [{ rel: "stylesheet", href: styles }];
 export const loader = async ({ request }) => {
   return getUserFromSession(request);
 };
+
+export const headers = () => {
+  return {
+    "Cache-Control": "max-age=3600", // 60 minutes
+  };
+};

@@ -52,3 +52,9 @@ export const action = async ({ request }) => {
     return { credentials: "Something went wrong!" };
   }
 };
+
+export const headers = ({ parentHeaders }) => {
+  return {
+    "Cache-Control": parentHeaders.get("Cache-Control"), // 60 minutes
+  };
+};
