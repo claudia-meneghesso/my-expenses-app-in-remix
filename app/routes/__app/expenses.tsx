@@ -43,9 +43,9 @@ const ExpensesLayout = () => {
 export default ExpensesLayout;
 
 export const loader = async ({ request }) => {
-  await requireUserSession(request);
+  const userId = await requireUserSession(request);
 
-  const expenses = getExpenses();
+  const expenses = await getExpenses(userId);
 
   return expenses;
 };

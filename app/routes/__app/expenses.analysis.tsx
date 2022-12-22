@@ -5,7 +5,7 @@ import ExpensesStatistics from "~/components/expenses/ExpenseStatistics";
 import Chart from "~/components/expenses/Chart";
 
 import { getExpenses } from "~/data/expenses.server";
-import { useCatch, useLoaderData } from "@remix-run/react";
+import { Link, useCatch, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { requireUserSession } from "~/data/auth.server";
 
@@ -23,13 +23,13 @@ export const ExpenseAnalysisPage: FC = () => {
 export default ExpenseAnalysisPage;
 
 export const loader = async ({ request }) => {
-  await requireUserSession(request);
+  const userId = await requireUserSession(request);
 
-  const expenses = await getExpenses();
+  const expenses = await getExpenses(userId);
 
   if (!expenses || expenses.length === 0) {
     throw json({
-      message: "No expenses found",
+      message: "Could not load expenses analysis. Yet to add some?",
       status: 404,
       statusText: "No expenses found.",
     });
@@ -43,10 +43,13 @@ export const CatchBoundary = () => {
 
   return (
     <main>
-      <Error title={caughtResponse.statusText}>
+      <Error title={caughtResponse.data.statusText}>
         <p>
           {caughtResponse.data?.message ||
             "Something went wrong! Could not load expenses."}
+        </p>
+        <p>
+          Add some <Link to="../expenses/add">here!</Link>
         </p>
       </Error>
     </main>

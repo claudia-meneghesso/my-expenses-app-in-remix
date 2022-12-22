@@ -53,11 +53,13 @@ export const requireUserSession = async (request) => {
   if (!userId) {
     throw redirect("/auth?mode=login");
   }
+
+  return userId;
 };
 
 export const signup = async ({ email, password }: User) => {
   // Check if a user already exists with that email
-  const existingUser = await prisma.users.findFirst({ where: { email } });
+  const existingUser = await prisma.user.findFirst({ where: { email } });
 
   // If yes, warn the user that their email already exists
   if (existingUser) {
@@ -72,7 +74,7 @@ export const signup = async ({ email, password }: User) => {
 
   try {
     // Create the user in the db
-    const user = await prisma.users.create({
+    const user = await prisma.user.create({
       data: { email, password: passwordHash },
     });
 
@@ -85,7 +87,7 @@ export const signup = async ({ email, password }: User) => {
 
 export const login = async ({ email, password }: User) => {
   // Check if a user exists with this credentials
-  const existingUser = await prisma.users.findFirst({ where: { email } });
+  const existingUser = await prisma.user.findFirst({ where: { email } });
 
   // If it does not exist, then warn the user
   if (!existingUser) {
